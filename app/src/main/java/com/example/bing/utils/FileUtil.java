@@ -1,4 +1,4 @@
-package com.example.bing;
+package com.example.bing.utils;
 
 import java.io.File;
 import java.io.FileInputStream;

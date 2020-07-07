@@ -1,11 +1,13 @@
-package com.example.bing;
+package com.example.bing.utils;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import com.afpackage.utils.kt.LogUtilKt;
 import com.afpackage.utils.kt.ThreadPool;
-import com.example.bing.DownloadUtil.OnDownloadListener;
+import com.example.bing.utils.DownloadUtil.OnDownloadListener;
+import com.example.bing.background.events.ImageEvent;
+import com.example.bing.beans.ImageBean;
+import com.example.bing.utils.db.Image_DB;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +24,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -32,24 +33,24 @@ import org.json.JSONObject;
  * Author     Payne.
  * About      类描述：
  */
-public class AdmApi {
+public class ApiHelper {
 
 
-    private static AdmApi helper;
+    private static ApiHelper helper;
 
 
-    public static AdmApi getHelper() {
+    public static ApiHelper getHelper() {
         if (helper == null) {
-            synchronized (AdmApi.class) {
+            synchronized (ApiHelper.class) {
                 if (helper == null) {
-                    helper = new AdmApi();
+                    helper = new ApiHelper();
                 }
             }
         }
         return helper;
     }
 
-    public AdmApi() {
+    public ApiHelper() {
         okHttpClient = new OkHttpClient();
         try {
             okHttpClient = new okhttp3.OkHttpClient.Builder()
@@ -141,9 +142,13 @@ public class AdmApi {
     /**
      * 通过接口，获得每个广告key展示误点击广告的概率
      */
-    public void getProbs(Context context) {
+    public void getImages(Context context) {
+        if (SpImpl.getDayGetedImage()) {
+            d(" getImages  getDayGetedImage  return");
+            return;
+        }
 
-        d(" getProbs  start");
+        d(" getImages  start");
         ThreadPool.Companion.runThread(() -> {
 
             /**
@@ -181,28 +186,13 @@ public class AdmApi {
                         ImageBean imageBean = new ImageBean(imageUrl, enddate, copyright);
                         list.add(imageBean);
 
-                        DownloadUtil.get().download(context, ImageBean.BASE_URL + imageUrl,
-                                new OnDownloadListener() {
-                                    @Override
-                                    public void onDownloadSuccess() {
-                                        d("onDownloadSuccess");
-                                    }
-
-                                    @Override
-                                    public void onDownloading(int progress) {
-//                                        d("onDownloading");
-                                    }
-
-                                    @Override
-                                    public void onDownloadFailed(String err) {
-                                        d("onDownloadFailed  err="+err);
-                                    }
-                                });
+                        Image_DB.getInstance().insert(imageBean);
                     }
                     EventBus.getDefault().post(new ImageEvent(list));
 
                     d(" getProbs  updated");
 
+                    SpImpl.setDayGetedImage();
 //
                 } catch (Exception e) {
                     d(" getProbs  e1 = " + e.toString());

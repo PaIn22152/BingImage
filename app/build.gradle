@@ -62,7 +62,8 @@ dependencies {
 
     //ButterKnife
     implementation "com.jakewharton:butterknife:$butterKnifeVer"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVer"
+//    annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVer"
+    kapt "com.jakewharton:butterknife-compiler:$butterKnifeVer"
 
 
     //okhttp

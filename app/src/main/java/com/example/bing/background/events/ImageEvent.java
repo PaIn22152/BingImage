@@ -1,5 +1,6 @@
-package com.example.bing;
+package com.example.bing.background.events;
 
+import com.example.bing.beans.ImageBean;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * About      类描述：
  */
 public class ImageEvent {
-    List<ImageBean> list;
+   public List<ImageBean> list;
 
     public ImageEvent(List<ImageBean> list) {
         this.list = list;

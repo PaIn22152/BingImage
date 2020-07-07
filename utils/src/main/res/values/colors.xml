@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+
+    <color name="color_btn_normal">#D81B60</color>
+    <color name="color_btn_pressed">#99D81B60</color>
+
+
+
+    <color name="white">#ffffff</color>
+    <color name="grey_film">#22000000</color>
+    <color name="grey_simple">#999999</color>
+    <color name="grey_simple_tran">#66666666</color>
+    <color name="grey_deep">#333333</color>
+    <color name="grey_deep_tran">#aa333333</color>
+    <color name="transparent">#00ffffff</color>
+
+
+    <color name="color_333333">#333333</color>
+    <color name="color_9c9c9c">#9c9c9c</color>
+    <color name="color_edecec">#edecec</color>
+    <color name="color_f8f8f9">#f8f8f9</color>
+    <color name="color_358aff">#358aff</color>
+    <color name="color_99358aff">#99358aff</color>
+    <color name="color_6e6e6e">#6e6e6e</color>
+    <color name="color_444444">#444444</color>
+    <color name="color_af7bff">#af7bff</color>
+    <color name="color_c0d6ff">#c0d6ff</color>
+    <color name="color_aa2b34">#aa2b34</color>
+    <color name="color_fefefe">#fefefe</color>
+    <color name="color_307ee9">#307ee9</color>
+
+</resources>

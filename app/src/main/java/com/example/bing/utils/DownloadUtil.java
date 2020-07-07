@@ -1,12 +1,12 @@
-package com.example.bing;
+package com.example.bing.utils;
 
 import android.content.Context;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import androidx.annotation.NonNull;
 import com.afpackage.utils.kt.LogUtilKt;
+import com.example.bing.beans.ImageBean;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -69,19 +69,15 @@ public class DownloadUtil {
      * @param url              下载连接
      * @param downloadListener 下载监听
      */
-    public void download(Context context, final String url,
+    public void download(Context context, ImageBean imageBean,
             final OnDownloadListener downloadListener) {
-        boolean have = addUrl(url, downloadListener);
+        boolean have = addUrl(imageBean.getFullUrl(), downloadListener);
         if (have) {
             return;
         }
-
-        String BASE_URL = context.getFilesDir().getAbsolutePath();
-        d("  download  url = " + url);
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-        String date = format.format(new Date())+".jpg";
-        String videoLocalPath = BASE_URL + "/l/" + date;
-        String videoCachePath = BASE_URL + "/c/" + date;
+        String url = imageBean.getFullUrl();
+        String videoLocalPath = PathUtil.getLocalPath(imageBean.url);
+        String videoCachePath = PathUtil.getCachePath(imageBean.url);
 
         FileUtil.createFile(videoCachePath);
         FileUtil.createFile(videoLocalPath);

@@ -1,4 +1,4 @@
-package com.example.bing;
+package com.example.bing.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import com.afpackage.utils.kt.base.BaseRecyclerViewAdapter1;
 import com.afpackage.utils.kt.base.BaseViewHolder;
+import com.example.bing.beans.ImageBean;
+import gasds.R;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,7 +39,7 @@ public class ImageAdapter extends BaseRecyclerViewAdapter1 {
     @Override
     public void onBindViewHolder(@NotNull BaseViewHolder viewholer, int position) {
         super.onBindViewHolder(viewholer, position);
-        viewholer.setImageViewPath(R.id.iv_ii_image, ImageBean.BASE_URL + mData.get(position).url);
+        viewholer.setImageViewPath(R.id.iv_ii_image, mData.get(position).getFullUrl());
         viewholer.setTextViewText(R.id.tv_ii_copyright, mData.get(position).copyright);
     }
 

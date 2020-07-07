@@ -1,9 +1,10 @@
-package com.example.bing;
+package com.example.bing.bases;
 
 import android.os.Bundle;
 import butterknife.ButterKnife;
 import com.afpackage.utils.kt.base.BaseActivity;
 import com.afpackage.utils.kt.base.RequestPermissionActivity;
+import com.example.bing.utils.L;
 import org.jetbrains.annotations.Nullable;
 
 /**
