@@ -1,0 +1,83 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+
+apply plugin: 'kotlin-kapt' // Required for annotation processing.
+
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.aaa.bing"//应用包名和项目路径区别开
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 2
+        versionName "1.0.8"
+
+        multiDexEnabled true
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "AppLock-kt-ad-0-${releaseTime()}.apk"
+        }
+    }
+
+
+}
+
+static def releaseTime() {
+    return new Date().format("MMddHHmm", TimeZone.getDefault())
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+
+
+    //utils module
+    implementation project(path: ':utils')
+
+
+    //androidx CardView
+    implementation "androidx.cardview:cardview:1.0.0"
+
+
+
+    //ButterKnife
+    implementation "com.jakewharton:butterknife:$butterKnifeVer"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVer"
+
+
+    //okhttp
+    api 'com.squareup.okhttp3:okhttp:3.12.1'
+
+
+    //EventBus
+    api "org.greenrobot:eventbus:$eventbusVer"
+
+
+
+
+}
+
+//apply plugin: 'io.objectbox' // Apply last.
+
+//apply plugin: 'com.google.gms.google-services'
+
