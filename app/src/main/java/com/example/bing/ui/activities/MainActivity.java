@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.afpackage.utils.kt.ScreenAdaptUtilKt;
 import com.example.bing.beans.ImageBean;
 import com.example.bing.utils.ApiHelper;
 import com.example.bing.background.events.ImageEvent;
@@ -62,6 +63,11 @@ public class MainActivity extends MyBaseActivity {
     @BindView(R.id.ll_am_menu)
     LinearLayout   ll_am_menu;
 
+    @Override
+    public void beforeSetContent() {
+        super.beforeSetContent();
+        ScreenAdaptUtilKt.adaptScreen(this);
+    }
 
     @OnClick({R.id.rl_am_root, R.id.tv_am_history, R.id.tv_am_copy,
             R.id.rl_am_menu, R.id.tv_am_download})

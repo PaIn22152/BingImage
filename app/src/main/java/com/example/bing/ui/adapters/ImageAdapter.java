@@ -40,7 +40,7 @@ public class ImageAdapter extends BaseRecyclerViewAdapter1 {
     public void onBindViewHolder(@NotNull BaseViewHolder viewholer, int position) {
         super.onBindViewHolder(viewholer, position);
         viewholer.setImageViewPath(R.id.iv_ii_image, mData.get(position).getFullUrl());
-
+        viewholer.setTextViewText(R.id.tv_ii_title, mData.get(position).dateFormat);
     }
 
     @Override

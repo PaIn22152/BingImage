@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="wrap_content">
 
   <ImageView
+    android:src="@drawable/def"
     android:id="@+id/iv_ii_image"
-    android:padding="10dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
+    android:layout_height="wrap_content"
+    android:padding="10dp" />
+
+  <RelativeLayout
+    android:layout_margin="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#66666666">
+
+    <TextView
+      android:id="@+id/tv_ii_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:padding="15dp"
+      android:text="20200908"
+      android:textColor="@color/white"
+      android:textSize="15sp" />
+
+  </RelativeLayout>
 
 
 </RelativeLayout>
