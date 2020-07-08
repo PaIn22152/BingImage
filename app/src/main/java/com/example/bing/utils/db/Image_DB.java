@@ -58,7 +58,7 @@ public class Image_DB {
     public synchronized void insert(ImageBean bean) {
 
         try {
-            if (query(bean.url) == null) {
+            if (queryByDay(bean.dateFormat) == null) {
 
                 //获取写数据库
                 SQLiteDatabase db = dbHelper.getWritableDatabase();

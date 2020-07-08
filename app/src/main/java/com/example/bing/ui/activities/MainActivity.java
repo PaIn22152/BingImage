@@ -6,9 +6,13 @@ import android.Manifest.permission;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,6 +34,8 @@ import com.example.bing.utils.L;
 import com.example.bing.utils.ToastUtil;
 import com.example.bing.utils.db.Image_DB;
 import gasds.R;
+import java.io.File;
+import java.io.FileNotFoundException;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -134,17 +140,15 @@ public class MainActivity extends MyBaseActivity {
                                     public void onDownloadSuccess(String path) {
                                         L.d("onDownloadSuccess");
                                         ToastUtil.showLong("下载成功");
-                                        String[] paths = {
-                                                path
-                                        };
-                                        MediaScannerConnection
-                                                .scanFile(MainActivity.this, paths, null, null);
+
+                                        updateSys(new File(path));
+
 
                                     }
 
                                     @Override
                                     public void onDownloading(int progress) {
-                                        L.d("onDownloading");
+                                        L.d("onDownloading  progress=" + progress);
                                     }
 
                                     @Override
@@ -165,6 +169,35 @@ public class MainActivity extends MyBaseActivity {
                     }
                 });
     }
+
+
+    private void updateSys(File file) {
+        //其次把文件插入到系统图库
+        try {
+            MediaStore.Images.Media.insertImage(this.getContentResolver(),
+                    file.getAbsolutePath(), file.getName(), null);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // 通知图库更新
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            MediaScannerConnection.scanFile(this, new String[]{file.getAbsolutePath()}, null,
+                    new MediaScannerConnection.OnScanCompletedListener() {
+                        public void onScanCompleted(String path, Uri uri) {
+                            Intent mediaScanIntent = new Intent(
+                                    Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                            mediaScanIntent.setData(uri);
+                            sendBroadcast(mediaScanIntent);
+                        }
+                    });
+        } else {
+            String relationDir = file.getParent();
+            File file1 = new File(relationDir);
+            sendBroadcast(
+                    new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.fromFile(file1.getAbsoluteFile())));
+        }
+    }
+
 
     private void showDialog2Download() {
 
