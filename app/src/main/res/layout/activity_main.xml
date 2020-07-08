@@ -63,6 +63,21 @@
         android:layout_height="1dp"/>
 
       <TextView
+        android:id="@+id/tv_am_copy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="19dp"
+        android:textSize="16sp"
+        android:textColor="@color/color_333333"
+        android:gravity="center"
+        android:text="复制图片地址" />
+
+      <TextView
+        android:background="@color/color_9c9c9c"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+      <TextView
         android:id="@+id/tv_am_history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

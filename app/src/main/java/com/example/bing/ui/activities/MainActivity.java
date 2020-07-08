@@ -6,6 +6,8 @@ import android.Manifest.permission;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
@@ -61,7 +63,7 @@ public class MainActivity extends MyBaseActivity {
     LinearLayout   ll_am_menu;
 
 
-    @OnClick({R.id.rl_am_root, R.id.tv_am_history,
+    @OnClick({R.id.rl_am_root, R.id.tv_am_history, R.id.tv_am_copy,
             R.id.rl_am_menu, R.id.tv_am_download})
     public void longClick(View view) {
         switch (view.getId()) {
@@ -79,6 +81,10 @@ public class MainActivity extends MyBaseActivity {
             case R.id.tv_am_download:
                 hideMenu();
                 downloadImage();
+                break;
+            case R.id.tv_am_copy:
+                hideMenu();
+                copyUrl();
                 break;
         }
     }
@@ -196,6 +202,20 @@ public class MainActivity extends MyBaseActivity {
             sendBroadcast(
                     new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.fromFile(file1.getAbsoluteFile())));
         }
+    }
+
+
+    private void copyUrl() {
+        if (imageBean != null) {
+            //获取剪贴板管理器：
+            ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            // 创建普通字符型ClipData
+            ClipData mClipData = ClipData.newPlainText("Label", imageBean.getFullUrl());
+            // 将ClipData内容放到系统剪贴板里。
+            cm.setPrimaryClip(mClipData);
+            ToastUtil.showLong("已复制到剪贴板");
+        }
+
     }
 
 
