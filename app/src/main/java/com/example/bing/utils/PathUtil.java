@@ -21,13 +21,13 @@ public class PathUtil {
     public static String getLocalPath(String url) {
         String tail = url.contains(".jpg") ? ".jpg" : (url.contains(".png") ? ".png" : "");
         String md5 = Md5Kt.MD5Encrypt(url);
-        return SD_BASE_PATH + "/bing/" + md5 + tail;
+        return APP_BASE_PATH + "/bing/" + md5 + tail;
 
     }
 
     public static String getCachePath(String url) {
         String md5 = Md5Kt.MD5Encrypt(url);
-        return SD_BASE_PATH + "/cache/" + md5;
+        return APP_BASE_PATH + "/cache/" + md5;
     }
 
 }

@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class Convert {
 
-    public static String dateFormat() {
+    public static String todayDateFormat() {
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         return format.format(new Date());
     }

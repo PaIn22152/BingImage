@@ -76,11 +76,20 @@ public class DownloadUtil {
             return;
         }
         String url = imageBean.getFullUrl();
-        String videoLocalPath = PathUtil.getLocalPath(imageBean.url);
-        String videoCachePath = PathUtil.getCachePath(imageBean.url);
+        String localPath = PathUtil.getLocalPath(imageBean.url);
 
-        FileUtil.createFile(videoCachePath);
-        FileUtil.createFile(videoLocalPath);
+        File file = new File(localPath);
+        if (file.exists() && file.length() > 10) {
+            if (downloadListener != null) {
+                downloadListener.onDownloaded(localPath);
+            }
+            return;
+        }
+
+        String cachePath = PathUtil.getCachePath(imageBean.url);
+
+        FileUtil.createFile(cachePath);
+        FileUtil.createFile(localPath);
 
         Request request = new Request.Builder().url(url).build();
 //        long downloadLength = 0, contentLength = getContentLength(url);
@@ -95,7 +104,7 @@ public class DownloadUtil {
                 handler.post(() -> {
                     OnDownloadListener listener = downloadingMap.get(url);
                     if (listener != null) {
-                        listener.onDownloadFailed(" e = " + e.toString());
+                        listener.onDownloadFailed(" e1 = " + e.toString());
                     }
                     removeUrl(url);
                 });
@@ -111,7 +120,7 @@ public class DownloadUtil {
                 FileOutputStream fos = null;
                 // 储存下载文件的目录
 //                String savePath = isExistDir(videoCachePath);
-                String savePath = videoCachePath;
+                String savePath = cachePath;
                 try {
                     is = response.body().byteStream();
                     long total = response.body().contentLength();
@@ -136,12 +145,12 @@ public class DownloadUtil {
                     fos.flush();
                     // 下载完成
 
-                    boolean move = FileUtil.move(videoCachePath, videoLocalPath);
+                    boolean move = FileUtil.move(cachePath, localPath);
                     if (move) {
                         handler.post(() -> {
                             OnDownloadListener listener = downloadingMap.get(url);
                             if (listener != null) {
-                                listener.onDownloadSuccess();
+                                listener.onDownloadSuccess(localPath);
                             }
                             removeUrl(url);
                         });
@@ -161,7 +170,7 @@ public class DownloadUtil {
                     handler.post(() -> {
                         OnDownloadListener listener = downloadingMap.get(url);
                         if (listener != null) {
-                            listener.onDownloadFailed(" e = " + e.toString());
+                            listener.onDownloadFailed(" e2 = " + e.toString());
                         }
                         removeUrl(url);
                     });
@@ -237,9 +246,14 @@ public class DownloadUtil {
     public interface OnDownloadListener {
 
         /**
+         * 已经下载到本地了
+         */
+        void onDownloaded(String localPath);
+
+        /**
          * 下载成功
          */
-        void onDownloadSuccess();
+        void onDownloadSuccess(String localPath);
 
         /**
          * @param progress 下载进度

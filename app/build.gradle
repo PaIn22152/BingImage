@@ -50,7 +50,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
 
-
     //utils module
     implementation project(path: ':utils')
 
@@ -59,10 +58,11 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
 
 
-
     //ButterKnife
     implementation "com.jakewharton:butterknife:$butterKnifeVer"
 //    annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVer"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     kapt "com.jakewharton:butterknife-compiler:$butterKnifeVer"
 
 
@@ -72,8 +72,6 @@ dependencies {
 
     //EventBus
     api "org.greenrobot:eventbus:$eventbusVer"
-
-
 
 
 }

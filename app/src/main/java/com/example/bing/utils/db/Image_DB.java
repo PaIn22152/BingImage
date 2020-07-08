@@ -125,7 +125,7 @@ public class Image_DB {
     }
 
 
-    public synchronized ImageBean queryToday() {
+    public synchronized ImageBean queryByDay(String dateFormat) {
 
         ImageBean bean = null;
         try {
@@ -142,15 +142,15 @@ public class Image_DB {
             //查询数据库
             Cursor cursor = null;
             try {
-                cursor = db.query(TABLE, columns, DatabaseHelper.TI_DATE_FORMAT + "=" + Convert.dateFormat(),
+                cursor = db.query(TABLE, columns, DatabaseHelper.TI_DATE_FORMAT + "=" + dateFormat,
                         null, null, null, null);//获取数据游标
                 while (cursor.moveToNext()) {
                     int id = cursor.getInt(0);
                     String url = cursor.getString(1);
                     String copyright = cursor.getString(2);
-                    String dateFormat = cursor.getString(3);
+                    String dateFormatt = cursor.getString(3);
 
-                    bean = new ImageBean(id, url, dateFormat, copyright);
+                    bean = new ImageBean(id, url, dateFormatt, copyright);
 
                 }
                 //关闭游标防止内存泄漏

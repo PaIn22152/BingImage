@@ -1,11 +1,7 @@
 package com.example.bing.utils;
 
-import android.content.Context;
 import com.afpackage.utils.kt.SpUtil;
 import com.example.bing.MyApp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Project    Bing
@@ -37,11 +33,11 @@ public class SpImpl extends SpUtil {
     private static final String DAY_GETED_IMAGE_KEY = "DAY_GETED_IMAGE_KEY";
 
     public static void setDayGetedImage() {
-        putValue(DAY_GETED_IMAGE_KEY + Convert.dateFormat(), true);
+        putValue(DAY_GETED_IMAGE_KEY + Convert.todayDateFormat(), true);
     }
 
     public static boolean getDayGetedImage() {
-        return (boolean) getValue(DAY_GETED_IMAGE_KEY + Convert.dateFormat(), false);
+        return (boolean) getValue(DAY_GETED_IMAGE_KEY + Convert.todayDateFormat(), false);
     }
 
 }
