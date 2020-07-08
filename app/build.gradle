@@ -34,7 +34,7 @@ android {
     }
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "AppLock-kt-ad-0-${releaseTime()}.apk"
+            outputFileName = "bing-${releaseTime()}.apk"
         }
     }
 
