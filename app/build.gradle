@@ -16,8 +16,8 @@ android {
         applicationId "com.aaa.bing"//应用包名和项目路径区别开
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2
-        versionName "1.0.8"
+        versionCode 3
+        versionName "2.0.8"
 
         multiDexEnabled true
 
