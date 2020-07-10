@@ -13,6 +13,8 @@ import com.example.bing.ui.adapters.ImageAdapter;
 import com.example.bing.utils.db.Image_DB;
 import gasds.R;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,6 +41,20 @@ public class HistoryActivity extends MyBaseActivity {
         rv_ah_images.setAdapter(adapter);
 
         mData.addAll(Image_DB.getInstance().queryAll());
+        Collections.sort(mData, new Comparator<ImageBean>() {
+            @Override
+            public int compare(ImageBean o1, ImageBean o2) {
+                try {
+                    long l1 = Long.parseLong(o1.dateFormat);
+                    long l2 = Long.parseLong(o2.dateFormat);
+                    return (int) (l2 - l1);
+                } catch (Exception e) {
+
+                }
+                return 0;
+            }
+        });
+
         adapter.notifyDataSetChanged();
 
         adapter.setItemClickListener(new OnItemClickListener() {
