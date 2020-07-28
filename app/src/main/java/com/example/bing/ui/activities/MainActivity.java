@@ -272,7 +272,7 @@ public class MainActivity extends MyBaseActivity {
 
 
     private void updateSys(File file) {
-        //其次把文件插入到系统图库
+        //把文件插入到系统图库
         try {
             MediaStore.Images.Media.insertImage(this.getContentResolver(),
                     file.getAbsolutePath(), file.getName(), null);
