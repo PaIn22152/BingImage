@@ -191,7 +191,8 @@ public class Image_DB {
             Cursor cursor = null;
             try {
                 cursor = db.query(TABLE, columns, "",
-                        null, null, null, null);//获取数据游标
+//                        null, null, null, null);//获取数据游标
+                        null, null, null,  DatabaseHelper.TI_DATE_FORMAT);//获取数据游标
                 while (cursor.moveToNext()) {
                     int id = cursor.getInt(0);
                     String url = cursor.getString(1);

@@ -34,10 +34,10 @@
 
   <RelativeLayout
     android:id="@+id/rl_am_menu"
-    android:visibility="invisible"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#99000000">
+    android:background="#99000000"
+    android:visibility="invisible">
 
     <LinearLayout
       android:id="@+id/ll_am_menu"
@@ -52,42 +52,73 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="19dp"
-        android:textSize="16sp"
-        android:textColor="@color/color_333333"
         android:gravity="center"
-        android:text="下载到本地" />
+        android:text="下载到本地"
+        android:textColor="@color/color_333333"
+        android:textSize="16sp" />
 
       <TextView
-        android:background="@color/color_9c9c9c"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:background="@color/color_9c9c9c" />
 
       <TextView
         android:id="@+id/tv_am_copy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="19dp"
-        android:textSize="16sp"
-        android:textColor="@color/color_333333"
         android:gravity="center"
-        android:text="复制图片地址" />
+        android:text="复制图片地址"
+        android:textColor="@color/color_333333"
+        android:textSize="16sp" />
 
       <TextView
-        android:background="@color/color_9c9c9c"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:background="@color/color_9c9c9c" />
+
+      <TextView
+        android:id="@+id/tv_am_wallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="19dp"
+        android:gravity="center"
+        android:text="下载并设置为壁纸"
+        android:textColor="@color/color_333333"
+        android:textSize="16sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_9c9c9c" />
 
       <TextView
         android:id="@+id/tv_am_history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="19dp"
-        android:textSize="16sp"
-        android:textColor="@color/color_333333"
         android:gravity="center"
-        android:text="查看历史图片" />
+        android:text="查看历史图片"
+        android:textColor="@color/color_333333"
+        android:textSize="16sp" />
 
     </LinearLayout>
+
+  </RelativeLayout>
+
+
+  <RelativeLayout
+    android:id="@+id/rl_am_more"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:layout_marginRight="10dp"
+    android:layout_alignParentRight="true">
+
+    <ImageView
+      android:layout_centerInParent="true"
+      android:layout_width="30dp"
+      android:layout_height="30dp"
+      android:src="@drawable/icons_more" />
 
   </RelativeLayout>
 

@@ -6,6 +6,7 @@ import android.Manifest.permission;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.app.AlertDialog;
+import android.app.WallpaperManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -13,6 +14,8 @@ import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -24,6 +27,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.afpackage.utils.kt.ScreenAdaptUtilKt;
+import com.bumptech.glide.Glide;
 import com.example.bing.beans.ImageBean;
 import com.example.bing.utils.ApiHelper;
 import com.example.bing.background.events.ImageEvent;
@@ -38,7 +42,9 @@ import com.example.bing.utils.ToastUtil;
 import com.example.bing.utils.db.Image_DB;
 import gasds.R;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -70,10 +76,16 @@ public class MainActivity extends MyBaseActivity {
     }
 
     @OnClick({R.id.rl_am_root, R.id.tv_am_history, R.id.tv_am_copy,
-            R.id.rl_am_menu, R.id.tv_am_download})
+            R.id.rl_am_menu, R.id.tv_am_download, R.id.rl_am_more,
+            R.id.tv_am_wallpaper
+    })
     public void longClick(View view) {
         switch (view.getId()) {
-            case R.id.rl_am_root:
+            case R.id.tv_am_wallpaper:
+                hideMenu();
+                showDialog2SetWallpaper();
+                break;
+            case R.id.rl_am_more:
                 showMenu();
                 break;
             case R.id.rl_am_menu:
@@ -132,6 +144,10 @@ public class MainActivity extends MyBaseActivity {
     }
 
     private void downloadImage() {
+        downloadImage(false, 0);
+    }
+
+    private void downloadImage(boolean setWallpaper, int type) {
         requestPermission4NormalManifest(permission.WRITE_EXTERNAL_STORAGE,
                 new OnPermissionRequestCallback() {
                     @Override
@@ -145,13 +161,22 @@ public class MainActivity extends MyBaseActivity {
                                      */
                                     @Override
                                     public void onDownloaded(String localPath) {
-                                        ToastUtil.showLong("本地已存在");
+                                        if (setWallpaper) {
+                                            setWallpaper(localPath, type);
+                                        } else {
+                                            ToastUtil.showLong("本地已存在");
+                                        }
                                     }
 
                                     @Override
                                     public void onDownloadSuccess(String path) {
                                         L.d("onDownloadSuccess");
-                                        ToastUtil.showLong("下载成功");
+
+                                        if (setWallpaper) {
+                                            setWallpaper(path, type);
+                                        } else {
+                                            ToastUtil.showLong("下载成功");
+                                        }
 
                                         updateSys(new File(path));
 
@@ -180,6 +205,69 @@ public class MainActivity extends MyBaseActivity {
 
                     }
                 });
+    }
+
+    private static final int WALLPAPER_TYPE_SYSTEM = 303;
+    private static final int WALLPAPER_TYPE_LOCK   = 304;
+    private static final int WALLPAPER_TYPE_ALL    = 305;
+
+    private void showDialog2SetWallpaper() {
+        if (VERSION.SDK_INT >= VERSION_CODES.N) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyDialog);
+            View view = LayoutInflater.from(this).inflate(R.layout.dialog_set_wallpaper, null);
+            LinearLayout ll_dsw_sys = view.findViewById(R.id.ll_dsw_sys);
+            LinearLayout ll_dsw_lock = view.findViewById(R.id.ll_dsw_lock);
+            LinearLayout ll_dsw_all = view.findViewById(R.id.ll_dsw_all);
+            builder.setView(view);
+            AlertDialog dialog = builder.create();
+            ll_dsw_sys.setOnClickListener(v -> {
+                dialog.dismiss();
+                downloadImage(true, WALLPAPER_TYPE_SYSTEM);
+            });
+            ll_dsw_lock.setOnClickListener(v -> {
+                dialog.dismiss();
+                downloadImage(true, WALLPAPER_TYPE_LOCK);
+            });
+            ll_dsw_all.setOnClickListener(v -> {
+                dialog.dismiss();
+                downloadImage(true, WALLPAPER_TYPE_ALL);
+            });
+            dialog.show();
+        } else {
+            downloadImage(true, WALLPAPER_TYPE_ALL);
+        }
+    }
+
+
+    private void setWallpaper(String path, int type) {
+        try {
+            WallpaperManager manager = WallpaperManager.getInstance(this);
+            if (VERSION.SDK_INT >= VERSION_CODES.N) {
+
+                if (type == WALLPAPER_TYPE_SYSTEM) {
+                    //桌面壁纸
+                    manager.setStream(new FileInputStream(path), null, true,
+                            WallpaperManager.FLAG_SYSTEM);
+                } else if (type == WALLPAPER_TYPE_LOCK) {
+                    //锁屏壁纸
+                    manager.setStream(new FileInputStream(path), null, true,
+                            WallpaperManager.FLAG_LOCK);
+                } else {
+                    //桌面壁纸
+                    manager.setStream(new FileInputStream(path), null, true,
+                            WallpaperManager.FLAG_SYSTEM);
+                    //锁屏壁纸
+                    manager.setStream(new FileInputStream(path), null, true,
+                            WallpaperManager.FLAG_LOCK);
+                }
+                ToastUtil.showLong("设置壁纸成功");
+            } else {
+                manager.setStream(new FileInputStream(path));
+                ToastUtil.showLong("设置壁纸成功");
+            }
+        } catch (Exception e) {
+            L.d("");
+        }
     }
 
 
@@ -252,6 +340,12 @@ public class MainActivity extends MyBaseActivity {
         ApiHelper.getHelper().getImages(this);
 
         imageBean = Image_DB.getInstance().queryByDay(Convert.todayDateFormat());
+        if (imageBean == null) {
+            List<ImageBean> imageBeans = Image_DB.getInstance().queryAll();
+            if (imageBeans.size() > 0) {
+                imageBean = imageBeans.get(imageBeans.size() - 1);
+            }
+        }
         updateUI();
 
 

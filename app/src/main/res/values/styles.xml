@@ -1,11 +1,122 @@
 <resources>
 
-  <!-- Base application theme. -->
-  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-    <!-- Customize your theme here. -->
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
-  </style>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+
+
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowIsTranslucent">true</item>
+
+
+    </style>
+
+
+
+<!--    <style name="ActivityEnterExitAnim"  parent="@android:style/Animation.Activity">-->
+<!--        <item name="android:activityOpenEnterAnimation">@anim/in_right</item>-->
+<!--        <item name="android:activityOpenExitAnimation">@anim/out_left</item>-->
+<!--        <item name="android:activityCloseEnterAnimation">@anim/in_left</item>-->
+<!--        <item name="android:activityCloseExitAnimation">@anim/out_right</item>-->
+<!--    </style>-->
+
+
+
+
+    <style name="AppLockTheme" parent="AppTheme">
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+
+
+    <style name="FullScreen" parent="AppLockTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="TranslucentFullScreen" parent="AppLockTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="colorPrimaryDark">@color/grey_deep_tran</item>
+    </style>
+
+    <style name="TranslucentTheme" parent="AppLockTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="colorPrimaryDark">@color/grey_deep_tran</item>
+    </style>
+
+
+    <style name="BtnStyle" parent="@style/Base.Widget.AppCompat.Button">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">@color/white</item>
+        <!--        todo -->
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">50.0dip</item>
+    </style>
+
+    <style name="CycleCheckbox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <!--        todo -->
+        <item name="android:button">@color/colorPrimary</item>
+    </style>
+
+
+    <style name="checkbox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <!--        todo -->
+        <item name="android:button">@color/colorPrimary</item>
+    </style>
+
+    <style name="MyToolbar" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="contentInsetStart">0.0dip</item>
+        <item name="contentInsetStartWithNavigation">0.0dip</item>
+        <item name="theme">@style/MyToolbarTheme</item>
+        <item name="titleTextAppearance">@style/MyToolbarTitleStyle</item>
+    </style>
+
+    <style name="MyToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="MyToolbarTitleStyle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+    <!--自定义Dialog背景全透明无边框theme-->
+    <style name="MyDialog" parent="Theme.AppCompat.Dialog">
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@drawable/corner_dialog</item>
+        <!-- 悬浮在Activity上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 对话框是否有遮盖 -->
+        <item name="android:windowContentOverlay">@null</item>
+
+    </style>
+
+
+
+
+
 
 </resources>
