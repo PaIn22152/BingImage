@@ -74,6 +74,9 @@ dependencies {
     api "org.greenrobot:eventbus:$eventbusVer"
 
 
+    //PhotoView
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
 }
 
 //apply plugin: 'io.objectbox' // Apply last.

@@ -79,7 +79,7 @@ allprojects {
         maven {
             url 'https://maven.aliyun.com/repository/public'
         }
-
+        maven { url "https://jitpack.io" }
         mavenCentral()
         google()
         jcenter()

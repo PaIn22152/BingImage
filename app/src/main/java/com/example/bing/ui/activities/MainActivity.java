@@ -40,6 +40,7 @@ import com.example.bing.utils.ImageLoader;
 import com.example.bing.utils.L;
 import com.example.bing.utils.ToastUtil;
 import com.example.bing.utils.db.Image_DB;
+import com.github.chrisbanes.photoview.PhotoView;
 import gasds.R;
 import java.io.File;
 import java.io.FileInputStream;
@@ -60,7 +61,7 @@ public class MainActivity extends MyBaseActivity {
 
     private static final int REQUEST_CODE_HISTORY = 1001;
     @BindView(R.id.iv_am_image)
-    ImageView iv_am_image;
+    PhotoView iv_am_image;
     @BindView(R.id.tv_am_des)
     TextView  tv_am_des;
 
